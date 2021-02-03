@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "49828721706",
+    "project_id": "drinkapp-82a4f",
+    "storage_bucket": "drinkapp-82a4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49828721706:android:e184331eaf2e525aa37f53",
+        "android_client_info": {
+          "package_name": "com.raywenderlich.android.drinkit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49828721706-okhuif00fjo0soh39edg9cn9t57ef76o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlDm_QrHmyWr6XD3cfLjY_kOZV_0Xb3Qk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "49828721706-okhuif00fjo0soh39edg9cn9t57ef76o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
