@@ -1,24 +1,46 @@
 package com.raywenderlich.android.drinkit
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-// TODO: import libraries
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.iid.FirebaseInstanceIdReceiver
 
-/**
- * Main Screen
- */
+
 class MainActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    // Switch to AppTheme for displaying the activity
     setTheme(R.style.AppTheme)
 
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    // TODO: create OnClickListener for the button_retrieve_token
+    val retrieveTokenButton = findViewById<Button>(R.id.button_retrieve_token)
 
-    // TODO: check in bundle extras for notification data
+    retrieveTokenButton.setOnClickListener {
+      if (checkGooglePlayServices()) {
+
+      } else {
+
+        Log.w(TAG, "Device doesn't have google play services")
+      }
+      FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener(OnCompleteListener { task ->
+        if (!task.isSuccessful) {
+          Log.w(TAG, "getInstanceId failed", task.exception)
+          return@OnCompleteListener
+        }
+        val token = task.result?.token
+
+        val message = getString(R.string.token_prefix, token)
+        Log.d(TAG, message)
+        Toast.makeText(baseContext, message, Toast.LENGTH_LONG).show()
+      })
+    }
   }
 
 
@@ -32,11 +54,17 @@ class MainActivity : AppCompatActivity() {
     // TODO: Unregister the receiver for notifications
   }
 
-  // TODO: Add a method for receiving notifications
+  private fun checkGooglePlayServices(): Boolean {
+    val status = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this)
 
-  // TODO: Add a function to check for Google Play Services
-
-  // TODO: Create a message receiver constant
+    return if (status != ConnectionResult.SUCCESS) {
+      Log.e(TAG, "Error")
+      false
+    } else {
+      Log.i(TAG, "Google play services updated")
+      true
+    }
+  }
 
   companion object {
     private const val TAG = "MainActivity"
