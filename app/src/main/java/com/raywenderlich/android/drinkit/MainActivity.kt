@@ -15,14 +15,16 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.iid.FirebaseInstanceIdReceiver
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 
 class MainActivity : AppCompatActivity() {
+
   private val messageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-      val receiveTextView = findViewById<TextView>(R.id.text_view_notification)
-      receiveTextView.text = intent?.extras?.getString("message")
+
+      text_view_notification.text = intent?.extras?.getString("message")
     }
   }
 
@@ -33,6 +35,11 @@ class MainActivity : AppCompatActivity() {
     setContentView(R.layout.activity_main)
 
     val retrieveTokenButton = findViewById<Button>(R.id.button_retrieve_token)
+
+    val bundle = intent.extras
+    if (bundle != null) {
+      text_view_notification.text = bundle.getString("text")
+    }
 
     retrieveTokenButton.setOnClickListener {
       if (checkGooglePlayServices()) {
