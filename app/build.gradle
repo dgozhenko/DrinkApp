@@ -2,10 +2,11 @@ plugins {
   id 'com.android.application'
   id 'kotlin-android'
   id 'com.google.gms.google-services'
+  id 'kotlin-android-extensions'
 }
 
 
-// TODO: add the plugin for google services
+
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
