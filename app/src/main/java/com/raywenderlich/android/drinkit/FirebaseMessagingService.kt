@@ -34,13 +34,29 @@
 
 package com.raywenderlich.android.drinkit
 
+import android.os.Looper
+import android.widget.Toast
 import com.google.firebase.messaging.FirebaseMessagingService
-
+import com.google.firebase.messaging.RemoteMessage
+import java.util.logging.Handler
 
 
 class FirebaseMessagingService: FirebaseMessagingService() {
   companion object {
     private const val TAG = "MyFirebaseMessagingS"
+  }
+
+  override fun onMessageReceived(remoteMessage: RemoteMessage) {
+    super.onMessageReceived(remoteMessage)
+    handleMessage(remoteMessage)
+  }
+
+  private fun handleMessage(remoteMessage: RemoteMessage) {
+    val handler = android.os.Handler(Looper.getMainLooper())
+
+    handler.post(Runnable {
+      Toast.makeText(baseContext, getString(R.string.handle_notification_now), Toast.LENGTH_LONG).show()
+    })
   }
 
 }
