@@ -34,21 +34,13 @@
 
 package com.raywenderlich.android.drinkit
 
-//TODO: Add imports
+import com.google.firebase.messaging.FirebaseMessagingService
 
-class MyFirebaseMessagingService {
 
-  // TODO: add onCreate
 
-  // TODO: override onNewToken
-
-  // TODO: add an onMessageReceived function
-
-  // TODO: add a handle message method
-
-  // TODO: Create a message receiver constant
-
+class FirebaseMessagingService: FirebaseMessagingService() {
   companion object {
     private const val TAG = "MyFirebaseMessagingS"
   }
+
 }

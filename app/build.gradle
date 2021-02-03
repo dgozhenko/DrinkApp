@@ -44,4 +44,5 @@ dependencies {
 
   // TUTORIAL DEPENDENCIES HERE
   implementation 'com.google.firebase:firebase-analytics:18.0.2'
+  implementation 'com.google.firebase:firebase-messaging:21.0.1'
 }
