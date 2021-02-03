@@ -1,10 +1,16 @@
 package com.raywenderlich.android.drinkit
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.tasks.OnCompleteListener
@@ -13,6 +19,12 @@ import com.google.firebase.iid.FirebaseInstanceIdReceiver
 
 
 class MainActivity : AppCompatActivity() {
+  private val messageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent?) {
+      val receiveTextView = findViewById<TextView>(R.id.text_view_notification)
+      receiveTextView.text = intent?.extras?.getString("message")
+    }
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     setTheme(R.style.AppTheme)
@@ -46,12 +58,12 @@ class MainActivity : AppCompatActivity() {
 
   override fun onStart() {
     super.onStart()
-    //TODO: Register the receiver for notifications
+    LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, IntentFilter("Data"))
   }
 
   override fun onStop() {
     super.onStop()
-    // TODO: Unregister the receiver for notifications
+    LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver)
   }
 
   private fun checkGooglePlayServices(): Boolean {

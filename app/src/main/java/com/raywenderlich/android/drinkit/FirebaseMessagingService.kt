@@ -34,14 +34,23 @@
 
 package com.raywenderlich.android.drinkit
 
+import android.content.Intent
 import android.os.Looper
 import android.widget.Toast
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import java.util.logging.Handler
 
 
 class FirebaseMessagingService: FirebaseMessagingService() {
+  private var broadcaster: LocalBroadcastManager? = null
+
+  override fun onCreate() {
+    super.onCreate()
+    broadcaster = LocalBroadcastManager.getInstance(this)
+  }
+
   companion object {
     private const val TAG = "MyFirebaseMessagingS"
   }
@@ -55,6 +64,12 @@ class FirebaseMessagingService: FirebaseMessagingService() {
     val handler = android.os.Handler(Looper.getMainLooper())
 
     handler.post(Runnable {
+      remoteMessage.notification?.let {
+        val intent = Intent("Data")
+        intent.putExtra("message", it.body)
+        broadcaster?.sendBroadcast(intent)
+      }
+
       Toast.makeText(baseContext, getString(R.string.handle_notification_now), Toast.LENGTH_LONG).show()
     })
   }
